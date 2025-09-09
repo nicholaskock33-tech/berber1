@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Cuts Barbershop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
+        
+        .gallery-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            max-height: 80%;
+            object-fit: contain;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #bbb;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        }
+    </style>
+</head>
+<body class="font-body bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-black text-white py-4 px-6 fixed w-full top-0 z-50 shadow-lg">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="font-display text-2xl font-bold text-yellow-400">Elite Cuts</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="hover:text-yellow-400 transition-colors">Home</a>
+                <a href="#services" class="hover:text-yellow-400 transition-colors">Services</a>
+                <a href="#gallery" class="hover:text-yellow-400 transition-colors">Gallery</a>
+                <a href="#contact" class="hover:text-yellow-400 transition-colors">Contact</a>
+            </div>
+            <button id="mobile-menu" class="md:hidden">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg text-white pt-20 pb-16">
+        <div class="max-w-6xl mx-auto px-6 py-20 text-center">
+            <h2 class="font-display text-5xl md:text-7xl font-bold mb-6">
+                Premium Cuts<br>
+                <span class="text-yellow-400">Master Crafted</span>
+            </h2>
+            <p class="text-xl md:text-2xl mb-8 text-gray-300 max-w-2xl mx-auto">
+                Experience the art of traditional barbering with modern style. Where every cut is a masterpiece.
+            </p>
+            <button onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})" 
+                    class="bg-yellow-400 text-black px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-300 transition-colors">
+                Book Your Appointment
+            </button>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-center mb-16 text-gray-800">Our Services</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-8 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">✂️</div>
+                    <h3 class="font-display text-2xl font-bold mb-4">Classic Cuts</h3>
+                    <p class="text-gray-600 mb-4">Traditional scissor cuts and modern styles tailored to your face shape and lifestyle.</p>
+                    <p class="font-semibold text-yellow-600">$35</p>
+                </div>
+                <div class="text-center p-8 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">🪒</div>
+                    <h3 class="font-display text-2xl font-bold mb-4">Hot Towel Shave</h3>
+                    <p class="text-gray-600 mb-4">Luxurious straight razor shave with hot towel treatment and premium oils.</p>
+                    <p class="font-semibold text-yellow-600">$45</p>
+                </div>
+                <div class="text-center p-8 bg-gray-50 rounded-xl hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">💈</div>
+                    <h3 class="font-display text-2xl font-bold mb-4">Beard Styling</h3>
+                    <p class="text-gray-600 mb-4">Professional beard trimming, shaping, and styling with premium products.</p>
+                    <p class="font-semibold text-yellow-600">$25</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-center mb-16 text-gray-800">Our Work</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Sample work photos using SVG placeholders -->
+                <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md cursor-pointer" onclick="openModal('modal1')">
+                    <svg class="w-full h-48 bg-gradient-to-br from-gray-300 to-gray-400" viewBox="0 0 300 200">
+                        <rect width="300" height="200" fill="url(#grad1)"/>
+                        <text x="150" y="100" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Classic Fade</text>
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4a5568"/>
+                                <stop offset="100%" style="stop-color:#2d3748"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="p-4">
+                        <h4 class="font-semibold">Modern Fade Cut</h4>
+                        <p class="text-sm text-gray-600">Clean taper fade with textured top</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md cursor-pointer" onclick="openModal('modal2')">
+                    <svg class="w-full h-48 bg-gradient-to-br from-yellow-300 to-yellow-500" viewBox="0 0 300 200">
+                        <rect width="300" height="200" fill="url(#grad2)"/>
+                        <text x="150" y="100" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Beard Style</text>
+                        <defs>
+                            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#d69e2e"/>
+                                <stop offset="100%" style="stop-color:#b7791f"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="p-4">
+                        <h4 class="font-semibold">Beard Sculpting</h4>
+                        <p class="text-sm text-gray-600">Professional beard shaping and trim</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md cursor-pointer" onclick="openModal('modal3')">
+                    <svg class="w-full h-48 bg-gradient-to-br from-blue-400 to-blue-600" viewBox="0 0 300 200">
+                        <rect width="300" height="200" fill="url(#grad3)"/>
+                        <text x="150" y="100" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Pompadour</text>
+                        <defs>
+                            <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4299e1"/>
+                                <stop offset="100%" style="stop-color:#3182ce"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="p-4">
+                        <h4 class="font-semibold">Classic Pompadour</h4>
+                        <p class="text-sm text-gray-600">Vintage style with modern twist</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md cursor-pointer" onclick="openModal('modal4')">
+                    <svg class="w-full h-48 bg-gradient-to-br from-green-400 to-green-600" viewBox="0 0 300 200">
+                        <rect width="300" height="200" fill="url(#grad4)"/>
+                        <text x="150" y="100" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Buzz Cut</text>
+                        <defs>
+                            <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#48bb78"/>
+                                <stop offset="100%" style="stop-color:#38a169"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="p-4">
+                        <h4 class="font-semibold">Military Buzz</h4>
+                        <p class="text-sm text-gray-600">Clean and precise buzz cut</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md cursor-pointer" onclick="openModal('modal5')">
+                    <svg class="w-full h-48 bg-gradient-to-br from-purple-400 to-purple-600" viewBox="0 0 300 200">
+                        <rect width="300" height="200" fill="url(#grad5)"/>
+                        <text x="150" y="100" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Undercut</text>
+                        <defs>
+                            <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#9f7aea"/>
+                                <stop offset="100%" style="stop-color:#805ad5"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="p-4">
+                        <h4 class="font-semibold">Trendy Undercut</h4>
+                        <p class="text-sm text-gray-600">Modern undercut with styled top</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md cursor-pointer" onclick="openModal('modal6')">
+                    <svg class="w-full h-48 bg-gradient-to-br from-red-400 to-red-600" viewBox="0 0 300 200">
+                        <rect width="300" height="200" fill="url(#grad6)"/>
+                        <text x="150" y="100" text-anchor="middle" fill="white" font-size="16" font-weight="bold">Crew Cut</text>
+                        <defs>
+                            <linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#f56565"/>
+                                <stop offset="100%" style="stop-color:#e53e3e"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="p-4">
+                        <h4 class="font-semibold">Classic Crew Cut</h4>
+                        <p class="text-sm text-gray-600">Timeless and professional style</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-600 mb-4">Want to add your own photos? Simply replace the placeholder images with your actual work!</p>
+                <button class="bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors">
+                    Upload Your Photos
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-black text-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="font-display text-4xl md:text-5xl font-bold text-center mb-16">Book Your Appointment</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="font-display text-2xl font-bold mb-6 text-yellow-400">Contact Info</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-4">📍</span>
+                            <div>
+                                <p class="font-semibold">Address</p>
+                                <p class="text-gray-300">123 Main Street, Downtown, City 12345</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-4">📞</span>
+                            <div>
+                                <p class="font-semibold">Phone</p>
+                                <p class="text-gray-300">(555) 123-4567</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-4">🕒</span>
+                            <div>
+                                <p class="font-semibold">Hours</p>
+                                <p class="text-gray-300">Mon-Fri: 9AM-7PM<br>Sat: 8AM-6PM<br>Sun: 10AM-4PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <form class="space-y-6" onsubmit="handleBooking(event)">
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Name</label>
+                            <input type="text" required class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:border-yellow-400 focus:outline-none text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Phone</label>
+                            <input type="tel" required class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:border-yellow-400 focus:outline-none text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Service</label>
+                            <select required class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:border-yellow-400 focus:outline-none text-white">
+                                <option value="">Select a service</option>
+                                <option value="classic-cut">Classic Cut - $35</option>
+                                <option value="hot-towel-shave">Hot Towel Shave - $45</option>
+                                <option value="beard-styling">Beard Styling - $25</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-2">Preferred Date</label>
+                            <input type="date" required class="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:border-yellow-400 focus:outline-none text-white">
+                        </div>
+                        <button type="submit" class="w-full bg-yellow-400 text-black py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors">
+                            Request Appointment
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h3 class="font-display text-2xl font-bold text-yellow-400 mb-4">Elite Cuts Barbershop</h3>
+            <p class="text-gray-400 mb-4">Where tradition meets modern style</p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Facebook</a>
+                <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Instagram</a>
+                <a href="#" class="text-gray-400 hover:text-yellow-400 transition-colors">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for Gallery Images -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content" id="modalImage"></div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu').addEventListener('click', function() {
+            alert('Mobile menu would expand here - add your navigation items!');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Gallery modal functions
+        function openModal(modalId) {
+            const modal = document.getElementById('imageModal');
+            const modalContent = document.getElementById('modalImage');
+            
+            // Create enlarged version of the clicked image
+            const originalSvg = event.target.closest('.gallery-item').querySelector('svg');
+            const clonedSvg = originalSvg.cloneNode(true);
+            clonedSvg.style.width = '100%';
+            clonedSvg.style.height = 'auto';
+            clonedSvg.style.maxHeight = '80vh';
+            
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clonedSvg);
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside the image
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Handle booking form submission
+        function handleBooking(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const name = formData.get('name') || event.target.querySelector('input[type="text"]').value;
+            const phone = formData.get('phone') || event.target.querySelector('input[type="tel"]').value;
+            const service = formData.get('service') || event.target.querySelector('select').value;
+            const date = formData.get('date') || event.target.querySelector('input[type="date"]').value;
+            
+            alert(`Booking request received!\n\nName: ${name}\nPhone: ${phone}\nService: ${service}\nDate: ${date}\n\nWe'll contact you soon to confirm your appointment!`);
+            event.target.reset();
+        }
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('bg-opacity-95');
+            } else {
+                nav.classList.remove('bg-opacity-95');
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97c65dd6951f06f7',t:'MTc1NzQxNzU2Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
